@@ -158,7 +158,8 @@ export const TerminalTabs = memo(() => {
                         className={classNames(
                           'flex items-center text-sm cursor-pointer gap-1.5 px-3 py-2 h-full whitespace-nowrap rounded-full',
                           {
-                            'bg-grower-ai-elements-terminals-buttonBackground text-grower-ai-elements-textPrimary': isActive,
+                            'bg-grower-ai-elements-terminals-buttonBackground text-grower-ai-elements-textPrimary':
+                              isActive,
                             'bg-grower-ai-elements-background-depth-2 text-grower-ai-elements-textSecondary hover:bg-grower-ai-elements-terminals-buttonBackground':
                               !isActive,
                           },

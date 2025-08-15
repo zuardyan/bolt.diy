@@ -111,25 +111,25 @@
   --grower-ai-elements-borderColor: theme('colors.alpha.white.10');
   --grower-ai-elements-borderColorActive: theme('colors.accent.400');
 
-  --grower-ai-elements-bg-depth-1: #0A0B0F;
+  --grower-ai-elements-bg-depth-1: #0a0b0f;
   --grower-ai-elements-bg-depth-2: #111827;
-  --grower-ai-elements-bg-depth-3: #1F2937;
+  --grower-ai-elements-bg-depth-3: #1f2937;
   --grower-ai-elements-bg-depth-4: theme('colors.alpha.white.5');
 
-  --grower-ai-elements-textPrimary: #F0F6FC;
-  --grower-ai-elements-textSecondary: #7D8590;
-  --grower-ai-elements-textTertiary: #656D76;
+  --grower-ai-elements-textPrimary: #f0f6fc;
+  --grower-ai-elements-textSecondary: #7d8590;
+  --grower-ai-elements-textTertiary: #656d76;
 
-  --grower-ai-elements-code-background: #1F2937;
-  --grower-ai-elements-code-text: #F0F6FC;
+  --grower-ai-elements-code-background: #1f2937;
+  --grower-ai-elements-code-text: #f0f6fc;
 
   --grower-ai-elements-button-primary-background: theme('colors.accent.600');
   --grower-ai-elements-button-primary-backgroundHover: theme('colors.accent.700');
-  --grower-ai-elements-button-primary-text: #FFFFFF;
+  --grower-ai-elements-button-primary-text: #ffffff;
 
-  --grower-ai-elements-button-secondary-background: #1F2937;
+  --grower-ai-elements-button-secondary-background: #1f2937;
   --grower-ai-elements-button-secondary-backgroundHover: #374151;
-  --grower-ai-elements-button-secondary-text: #F0F6FC;
+  --grower-ai-elements-button-secondary-text: #f0f6fc;
 
   --grower-ai-elements-button-danger-background: theme('colors.alpha.red.10');
   --grower-ai-elements-button-danger-backgroundHover: theme('colors.alpha.red.20');
@@ -148,17 +148,17 @@
   --grower-ai-elements-loader-progress: theme('colors.accent.500');
 
   --grower-ai-elements-artifacts-background: #111827;
-  --grower-ai-elements-artifacts-backgroundHover: #1F2937;
+  --grower-ai-elements-artifacts-backgroundHover: #1f2937;
   --grower-ai-elements-artifacts-borderColor: var(--grower-ai-elements-borderColor);
-  --grower-ai-elements-artifacts-inlineCode-background: #1F2937;
-  --grower-ai-elements-artifacts-inlineCode-text: #F0F6FC;
+  --grower-ai-elements-artifacts-inlineCode-background: #1f2937;
+  --grower-ai-elements-artifacts-inlineCode-text: #f0f6fc;
 
   --grower-ai-elements-actions-background: #111827;
-  --grower-ai-elements-actions-code-background: #1F2937;
+  --grower-ai-elements-actions-code-background: #1f2937;
 
   --grower-ai-elements-messages-background: #111827;
   --grower-ai-elements-messages-linkColor: theme('colors.accent.400');
-  --grower-ai-elements-messages-code-background: #0A0B0F;
+  --grower-ai-elements-messages-code-background: #0a0b0f;
   --grower-ai-elements-messages-inlineCode-background: theme('colors.gray.700');
   --grower-ai-elements-messages-inlineCode-text: var(--grower-ai-elements-textPrimary);
 
@@ -191,7 +191,7 @@
 
   /* Terminal Colors */
   --grower-ai-terminal-background: var(--grower-ai-elements-terminals-background);
-  --grower-ai-terminal-foreground: #F0F6FC;
+  --grower-ai-terminal-foreground: #f0f6fc;
   --grower-ai-terminal-selection-background: #374151;
   --grower-ai-terminal-black: #000000;
   --grower-ai-terminal-red: #ff5c57;

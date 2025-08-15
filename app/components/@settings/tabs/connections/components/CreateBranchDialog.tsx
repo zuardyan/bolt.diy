@@ -47,7 +47,10 @@ export function CreateBranchDialog({ isOpen, onClose, onConfirm, repository, bra
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
               <div>
-                <label htmlFor="branchName" className="block text-sm font-medium text-grower-ai-elements-textSecondary mb-2">
+                <label
+                  htmlFor="branchName"
+                  className="block text-sm font-medium text-grower-ai-elements-textSecondary mb-2"
+                >
                   Branch Name
                 </label>
                 <input

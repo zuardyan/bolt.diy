@@ -167,7 +167,9 @@ export const ChatBox: React.FC<ChatBoxProps> = (props) => {
         </div>
       )}
       <div
-        className={classNames('relative shadow-xs border border-grower-ai-elements-borderColor backdrop-blur rounded-lg')}
+        className={classNames(
+          'relative shadow-xs border border-grower-ai-elements-borderColor backdrop-blur rounded-lg',
+        )}
       >
         <textarea
           ref={props.textareaRef}
@@ -324,7 +326,8 @@ export const ChatBox: React.FC<ChatBoxProps> = (props) => {
           {props.input.length > 3 ? (
             <div className="text-xs text-grower-ai-elements-textTertiary">
               Use <kbd className="kdb px-1.5 py-0.5 rounded bg-grower-ai-elements-background-depth-2">Shift</kbd> +{' '}
-              <kbd className="kdb px-1.5 py-0.5 rounded bg-grower-ai-elements-background-depth-2">Return</kbd> a new line
+              <kbd className="kdb px-1.5 py-0.5 rounded bg-grower-ai-elements-background-depth-2">Return</kbd> a new
+              line
             </div>
           ) : null}
           <SupabaseConnection />

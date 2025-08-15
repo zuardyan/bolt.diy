@@ -858,7 +858,9 @@ const ServiceStatusTab = () => {
                   </div>
                   {service.incidents && service.incidents.length > 0 && (
                     <div className="mt-2 border-t border-grower-ai-elements-borderColor pt-2">
-                      <p className="text-xs font-medium text-grower-ai-elements-textSecondary mb-1">Recent Incidents:</p>
+                      <p className="text-xs font-medium text-grower-ai-elements-textSecondary mb-1">
+                        Recent Incidents:
+                      </p>
                       <ul className="text-xs text-grower-ai-elements-textTertiary space-y-1">
                         {service.incidents.map((incident, i) => (
                           <li key={i}>{incident}</li>

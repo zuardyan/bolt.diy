@@ -327,7 +327,8 @@ function Button({ active = false, disabled = false, children, onClick, className
         {
           'bg-grower-ai-elements-item-backgroundDefault hover:bg-grower-ai-elements-item-backgroundActive text-grower-ai-elements-textTertiary hover:text-grower-ai-elements-textPrimary':
             !active,
-          'bg-grower-ai-elements-item-backgroundDefault text-grower-ai-elements-item-contentAccent': active && !disabled,
+          'bg-grower-ai-elements-item-backgroundDefault text-grower-ai-elements-item-contentAccent':
+            active && !disabled,
           'bg-grower-ai-elements-item-backgroundDefault text-alpha-gray-20 dark:text-alpha-white-20 cursor-not-allowed':
             disabled,
         },

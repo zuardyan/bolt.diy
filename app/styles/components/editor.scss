@@ -6,12 +6,18 @@
 
   --cm-gutter-backgroundColor: var(--grower-ai-elements-editor-gutter-backgroundColor, var(--cm-backgroundColor));
   --cm-gutter-textColor: var(--grower-ai-elements-editor-gutter-textColor, var(--grower-ai-elements-textSecondary));
-  --cm-gutter-activeLineTextColor: var(--grower-ai-elements-editor-gutter-activeLineTextColor, var(--cm-gutter-textColor));
+  --cm-gutter-activeLineTextColor: var(
+    --grower-ai-elements-editor-gutter-activeLineTextColor,
+    var(--cm-gutter-textColor)
+  );
 
   /* Fold Gutter */
 
   --cm-foldGutter-textColor: var(--grower-ai-elements-editor-foldGutter-textColor, var(--cm-gutter-textColor));
-  --cm-foldGutter-textColorHover: var(--grower-ai-elements-editor-foldGutter-textColorHover, var(--cm-gutter-textColor));
+  --cm-foldGutter-textColorHover: var(
+    --grower-ai-elements-editor-foldGutter-textColorHover,
+    var(--cm-gutter-textColor)
+  );
 
   /* Active Line */
 
@@ -41,7 +47,10 @@
 
   --cm-search-backgroundColor: var(--grower-ai-elements-editor-search-backgroundColor, var(--cm-backgroundColor));
   --cm-search-textColor: var(--grower-ai-elements-editor-search-textColor, var(--grower-ai-elements-textSecondary));
-  --cm-search-closeButton-backgroundColor: var(--grower-ai-elements-editor-search-closeButton-backgroundColor, transparent);
+  --cm-search-closeButton-backgroundColor: var(
+    --grower-ai-elements-editor-search-closeButton-backgroundColor,
+    transparent
+  );
 
   --cm-search-closeButton-backgroundColorHover: var(
     --grower-ai-elements-editor-search-closeButton-backgroundColorHover,
@@ -68,7 +77,10 @@
     var(--grower-ai-elements-item-backgroundActive)
   );
 
-  --cm-search-button-textColor: var(--grower-ai-elements-editor-search-button-textColor, var(--grower-ai-elements-textSecondary));
+  --cm-search-button-textColor: var(
+    --grower-ai-elements-editor-search-button-textColor,
+    var(--grower-ai-elements-textSecondary)
+  );
 
   --cm-search-button-textColorHover: var(
     --grower-ai-elements-editor-search-button-textColorHover,
@@ -84,8 +96,14 @@
   );
 
   --cm-search-input-backgroundColor: var(--grower-ai-elements-editor-search-input-backgroundColor, transparent);
-  --cm-search-input-textColor: var(--grower-ai-elements-editor-search-input-textColor, var(--grower-ai-elements-textPrimary));
-  --cm-search-input-borderColor: var(--grower-ai-elements-editor-search-input-borderColor, var(--grower-ai-elements-borderColor));
+  --cm-search-input-textColor: var(
+    --grower-ai-elements-editor-search-input-textColor,
+    var(--grower-ai-elements-textPrimary)
+  );
+  --cm-search-input-borderColor: var(
+    --grower-ai-elements-editor-search-input-borderColor,
+    var(--grower-ai-elements-borderColor)
+  );
 
   --cm-search-input-borderColorFocused: var(
     --grower-ai-elements-editor-search-input-borderColorFocused,
@@ -109,7 +127,10 @@
 
   --cm-tooltip-borderColor: var(--grower-ai-elements-editor-tooltip-borderColor, var(--grower-ai-elements-borderColor));
 
-  --cm-searchMatch-backgroundColor: var(--grower-ai-elements-editor-searchMatch-backgroundColor, rgba(234, 92, 0, 0.33));
+  --cm-searchMatch-backgroundColor: var(
+    --grower-ai-elements-editor-searchMatch-backgroundColor,
+    rgba(234, 92, 0, 0.33)
+  );
 }
 
 html[data-theme='light'] {
