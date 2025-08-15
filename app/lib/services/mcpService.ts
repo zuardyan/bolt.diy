@@ -6,7 +6,19 @@ import {
   convertToCoreMessages,
   formatDataStreamPart,
 } from 'ai';
-import { Experimental_StdioMCPTransport } from 'ai/mcp-stdio';
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+let Experimental_StdioMCPTransport: any;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function getStdioTransport() {
+  if (typeof process !== 'undefined' && process.versions?.node) {
+    const mod = await import('ai/mcp-stdio');
+    Experimental_StdioMCPTransport = mod.Experimental_StdioMCPTransport;
+  } else {
+    throw new Error('STDIO transport is not supported in this environment.');
+  }
+}
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { z } from 'zod';
 import type { ToolCallAnnotation } from '~/types/context';
