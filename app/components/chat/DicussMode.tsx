@@ -7,7 +7,7 @@ export function DiscussMode() {
       <IconButton
         title="Discuss"
         className={classNames(
-          'transition-all flex items-center gap-1 bg-bolt-elements-item-backgroundAccent text-bolt-elements-item-contentAccent',
+          'transition-all flex items-center gap-1 bg-grower-ai-elements-item-backgroundAccent text-grower-ai-elements-item-contentAccent',
         )}
       >
         <div className={`i-ph:chats text-xl`} />
