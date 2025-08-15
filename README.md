@@ -1,99 +1,29 @@
-# bolt.diy
+# GrowerAI
 
-[![bolt.diy: AI-Powered Full-Stack Web Development in the Browser](./public/social_preview_index.jpg)](https://bolt.diy)
+[![GrowerAI: The #1 AI Marketing Software - AI-powered development platform](./public/social_preview_index.jpg)](https://www.thegrower.ai)
 
-Welcome to bolt.diy, the official open source version of Bolt.new, which allows you to choose the LLM that you use for each prompt! Currently, you can use OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, or Groq models - and it is easily extended to use any other model supported by the Vercel AI SDK! See the instructions below for running this locally and extending it to include more models.
-
------
-Check the [bolt.diy Docs](https://stackblitz-labs.github.io/bolt.diy/) for more offical installation instructions and more informations.
+Welcome to GrowerAI, an AI-powered full-stack development platform that brings together cutting-edge AI technology and marketing operations expertise. Built on the foundation of modern development tools, GrowerAI allows you to choose the LLM that you use for each prompt! Currently, you can use OpenAI, Anthropic, Ollama, OpenRouter, Gemini, LMStudio, Mistral, xAI, HuggingFace, DeepSeek, or Groq models - and it is easily extended to use any other model supported by the Vercel AI SDK!
 
 -----
-Also [this pinned post in our community](https://thinktank.ottomator.ai/t/videos-tutorial-helpful-content/3243) has a bunch of incredible resources for running and deploying bolt.diy yourself!
+Check the [GrowerAI Docs](https://www.thegrower.ai/docs) for official installation instructions and more information.
 
-We have also launched an experimental agent called the "bolt.diy Expert" that can answer common questions about bolt.diy. Find it here on the [oTTomator Live Agent Studio](https://studio.ottomator.ai/).
+-----
 
-bolt.diy was originally started by [Cole Medin](https://www.youtube.com/@ColeMedin) but has quickly grown into a massive community effort to build the BEST open source AI coding assistant!
+GrowerAI was developed to revolutionize AI marketing software development, combining the power of AI-driven insights with full-stack development capabilities.
 
 ## Table of Contents
 
 - [Join the Community](#join-the-community)
-- [Requested Additions](#requested-additions)
 - [Features](#features)
 - [Setup](#setup)
 - [Run the Application](#run-the-application)
 - [Available Scripts](#available-scripts)
 - [Contributing](#contributing)
-- [Roadmap](#roadmap)
 - [FAQ](#faq)
 
 ## Join the community
 
-[Join the bolt.diy community here, in the oTTomator Think Tank!](https://thinktank.ottomator.ai)
-
-## Project management
-
-Bolt.diy is a community effort! Still, the core team of contributors aims at organizing the project in way that allows
-you to understand where the current areas of focus are.
-
-If you want to know what we are working on, what we are planning to work on, or if you want to contribute to the
-project, please check the [project management guide](./PROJECT.md) to get started easily.
-
-## Requested Additions
-
-- ✅ OpenRouter Integration (@coleam00)
-- ✅ Gemini Integration (@jonathands)
-- ✅ Autogenerate Ollama models from what is downloaded (@yunatamos)
-- ✅ Filter models by provider (@jasonm23)
-- ✅ Download project as ZIP (@fabwaseem)
-- ✅ Improvements to the main bolt.new prompt in `app\lib\.server\llm\prompts.ts` (@kofi-bhr)
-- ✅ DeepSeek API Integration (@zenith110)
-- ✅ Mistral API Integration (@ArulGandhi)
-- ✅ "Open AI Like" API Integration (@ZerxZ)
-- ✅ Ability to sync files (one way sync) to local folder (@muzafferkadir)
-- ✅ Containerize the application with Docker for easy installation (@aaronbolton)
-- ✅ Publish projects directly to GitHub (@goncaloalves)
-- ✅ Ability to enter API keys in the UI (@ali00209)
-- ✅ xAI Grok Beta Integration (@milutinke)
-- ✅ LM Studio Integration (@karrot0)
-- ✅ HuggingFace Integration (@ahsan3219)
-- ✅ Bolt terminal to see the output of LLM run commands (@thecodacus)
-- ✅ Streaming of code output (@thecodacus)
-- ✅ Ability to revert code to earlier version (@wonderwhy-er)
-- ✅ Chat history backup and restore functionality (@sidbetatester)
-- ✅ Cohere Integration (@hasanraiyan)
-- ✅ Dynamic model max token length (@hasanraiyan)
-- ✅ Better prompt enhancing (@SujalXplores)
-- ✅ Prompt caching (@SujalXplores)
-- ✅ Load local projects into the app (@wonderwhy-er)
-- ✅ Together Integration (@mouimet-infinisoft)
-- ✅ Mobile friendly (@qwikode)
-- ✅ Better prompt enhancing (@SujalXplores)
-- ✅ Attach images to prompts (@atrokhym)(@stijnus)
-- ✅ Added Git Clone button (@thecodacus)
-- ✅ Git Import from url (@thecodacus)
-- ✅ PromptLibrary to have different variations of prompts for different use cases (@thecodacus)
-- ✅ Detect package.json and commands to auto install & run preview for folder and git import (@wonderwhy-er)
-- ✅ Selection tool to target changes visually (@emcconnell)
-- ✅ Detect terminal Errors and ask bolt to fix it (@thecodacus)
-- ✅ Detect preview Errors and ask bolt to fix it (@wonderwhy-er)
-- ✅ Add Starter Template Options (@thecodacus)
-- ✅ Perplexity Integration (@meetpateltech)
-- ✅ AWS Bedrock Integration (@kunjabijukchhe)
-- ✅ Add a "Diff View" to see the changes (@toddyclipsgg)
-- ⬜ **HIGH PRIORITY** - Prevent bolt from rewriting files as often (file locking and diffs)
-- ⬜ **HIGH PRIORITY** - Better prompting for smaller LLMs (code window sometimes doesn't start)
-- ⬜ **HIGH PRIORITY** - Run agents in the backend as opposed to a single model call
-- ✅ Deploy directly to Netlify (@xKevIsDev)
-- ⬜ Supabase Integration
-- ⬜ Have LLM plan the project in a MD file for better results/transparency
-- ⬜ VSCode Integration with git-like confirmations
-- ⬜ Upload documents for knowledge - UI design templates, a code base to reference coding style, etc.
-- ⬜ Voice prompting
-- ⬜ Azure Open AI API Integration
-- ⬜ Vertex AI Integration
-- ⬜ Granite Integration
-- ✅ Popout Window for Web Container(@stijnus)
-- ✅ Ability to change Popout window size (@stijnus)
+[Contact us at info@thegrower.ai](mailto:info@thegrower.ai) to join the GrowerAI community!
 
 ## Features
 
@@ -102,25 +32,24 @@ project, please check the [project management guide](./PROJECT.md) to get starte
 - **Attach images to prompts** for better contextual understanding.
 - **Integrated terminal** to view output of LLM-run commands.
 - **Revert code to earlier versions** for easier debugging and quicker changes.
-- **Download projects as ZIP** for easy portability Sync to a folder on the host.
+- **Download projects as ZIP** for easy portability and sync to a folder on the host.
 - **Integration-ready Docker support** for a hassle-free setup.
 - **Deploy** directly to **Netlify**
+- **Marketing-focused AI tools** optimized for social media and digital marketing campaigns
 
 ## Setup
 
-If you're new to installing software from GitHub, don't worry! If you encounter any issues, feel free to submit an "issue" using the provided links or improve this documentation by forking the repository, editing the instructions, and submitting a pull request. The following instruction will help you get the stable branch up and running on your local machine in no time.
+If you're new to installing software from GitHub, don't worry! If you encounter any issues, feel free to contact us at info@thegrower.ai or submit an issue. The following instructions will help you get GrowerAI up and running on your local machine.
 
-Let's get you up and running with the stable version of Bolt.DIY!
+Let's get you up and running with GrowerAI!
 
 ## Quick Download
 
-[![Download Latest Release](https://img.shields.io/github/v/release/stackblitz-labs/bolt.diy?label=Download%20Bolt&sort=semver)](https://github.com/stackblitz-labs/bolt.diy/releases/latest) ← Click here to go the the latest release version!
-
-- Next **click source.zip**
+[![Download Latest Release](https://img.shields.io/github/v/release/zuardCoder/grower-ai?label=Download%20GrowerAI&sort=semver)](https://github.com/zuardCoder/grower-ai/releases/latest) ← Click here to go to the latest release version!
 
 ## Prerequisites
 
-Before you begin, you'll need to install two important pieces of software:
+Before you begin, you'll need to install Node.js:
 
 ### Install Node.js
 
@@ -132,20 +61,15 @@ Node.js is required to run the application.
 4. Verify Node.js is properly installed:
    - **For Windows Users**:
      1. Press `Windows + R`
-     2. Type "sysdm.cpl" and press Enter
-     3. Go to "Advanced" tab → "Environment Variables"
-     4. Check if `Node.js` appears in the "Path" variable
+     2. Type "cmd" and press Enter
+     3. Type `node --version` to verify installation
    - **For Mac/Linux Users**:
      1. Open Terminal
-     2. Type this command:
-        ```bash
-        echo $PATH
-        ```
-     3. Look for `/usr/local/bin` in the output
+     2. Type `node --version` to verify installation
 
 ## Running the Application
 
-You have two options for running Bolt.DIY: directly on your machine or using Docker.
+You have two options for running GrowerAI: directly on your machine or using Docker.
 
 ### Option 1: Direct Installation (Recommended for Beginners)
 
@@ -184,7 +108,7 @@ This option requires some familiarity with Docker but provides a more isolated e
    npm run dockerbuild
 
    # OR using direct Docker command:
-   docker build . --target bolt-ai-development
+   docker build . --target grower-ai-development
    ```
 
 2. **Run the Container**:
@@ -196,26 +120,21 @@ This option requires some familiarity with Docker but provides a more isolated e
 
 ### Adding Your API Keys
 
-Setting up your API keys in Bolt.DIY is straightforward:
+Setting up your API keys in GrowerAI is straightforward:
 
 1. Open the home page (main interface)
 2. Select your desired provider from the dropdown menu
 3. Click the pencil (edit) icon
 4. Enter your API key in the secure input field
 
-![API Key Configuration Interface](./docs/images/api-key-ui-section.png)
-
 ### Configuring Custom Base URLs
 
 For providers that support custom base URLs (such as Ollama or LM Studio), follow these steps:
 
 1. Click the settings icon in the sidebar to open the settings menu
-   ![Settings Button Location](./docs/images/bolt-settings-button.png)
-
 2. Navigate to the "Providers" tab
 3. Search for your provider using the search bar
 4. Enter your custom base URL in the designated field
-   ![Provider Base URL Configuration](./docs/images/provider-base-url.png)
 
 > **Note**: Custom base URLs are particularly useful when running local instances of AI models or using custom API endpoints.
 
@@ -223,9 +142,18 @@ For providers that support custom base URLs (such as Ollama or LM Studio), follo
 
 - Ollama
 - LM Studio
-- OpenAILike
+- OpenAI
+- Anthropic
+- Google Gemini
+- Mistral
+- xAI
+- HuggingFace
+- DeepSeek
+- Groq
+- OpenRouter
+- And more!
 
-## Setup Using Git (For Developers only)
+## Setup Using Git (For Developers)
 
 This method is recommended for developers who want to:
 
@@ -243,13 +171,13 @@ This method is recommended for developers who want to:
 1. **Clone the Repository**:
 
    ```bash
-   git clone -b stable https://github.com/stackblitz-labs/bolt.diy.git
+   git clone https://github.com/zuardCoder/grower-ai.git
    ```
 
 2. **Navigate to Project Directory**:
 
    ```bash
-   cd bolt.diy
+   cd grower-ai
    ```
 
 3. **Install Dependencies**:
@@ -263,19 +191,10 @@ This method is recommended for developers who want to:
    pnpm run dev
    ```
 
-5. **(OPTIONAL)** Switch to the Main Branch if you want to use pre-release/testbranch:
-   ```bash
-   git checkout main
-   pnpm install
-   pnpm run dev
-   ```
-  Hint: Be aware that this can have beta-features and more likely got bugs than the stable release
-
 >**Open the WebUI to test (Default: http://localhost:5173)**
->   - Beginngers: 
+>   - Beginners: 
 >     - Try to use a sophisticated Provider/Model like Anthropic with Claude Sonnet 3.x Models to get best results
->     - Explanation: The System Prompt currently implemented in bolt.diy cant cover the best performance for all providers and models out there. So it works better with some models, then other, even if the models itself are perfect for >programming
->     - Future: Planned is a Plugin/Extentions-Library so there can be different System Prompts for different Models, which will help to get better results
+>     - The System Prompt is optimized for GrowerAI's marketing-focused development needs
 
 #### Staying Updated
 
@@ -304,31 +223,6 @@ To get the latest changes from the repository:
    git stash pop
    ```
 
-#### Troubleshooting Git Setup
-
-If you encounter issues:
-
-1. **Clean Installation**:
-
-   ```bash
-   # Remove node modules and lock files
-   rm -rf node_modules pnpm-lock.yaml
-
-   # Clear pnpm cache
-   pnpm store prune
-
-   # Reinstall dependencies
-   pnpm install
-   ```
-
-2. **Reset Local Changes**:
-   ```bash
-   # Discard all local changes
-   git reset --hard origin/main
-   ```
-
-Remember to always commit your local changes or stash them before pulling updates to avoid conflicts.
-
 ---
 
 ## Available Scripts
@@ -347,22 +241,23 @@ Remember to always commit your local changes or stash them before pulling update
 
 ## Contributing
 
-We welcome contributions! Check out our [Contributing Guide](CONTRIBUTING.md) to get started.
-
----
-
-## Roadmap
-
-Explore upcoming features and priorities on our [Roadmap](https://roadmap.sh/r/ottodev-roadmap-2ovzo).
+We welcome contributions! Please contact us at info@thegrower.ai to get started with contributing to GrowerAI.
 
 ---
 
 ## FAQ
 
-For answers to common questions, issues, and to see a list of recommended models, visit our [FAQ Page](FAQ.md).
-
+For answers to common questions and support, visit [www.thegrower.ai](https://www.thegrower.ai) or contact us at info@thegrower.ai.
 
 # Licensing
-**Who needs a commercial WebContainer API license?**
 
-bolt.diy source code is distributed as MIT, but it uses WebContainers API that [requires licensing](https://webcontainers.io/enterprise) for production usage in a commercial, for-profit setting. (Prototypes or POCs do not require a commercial license.) If you're using the API to meet the needs of your customers, prospective customers, and/or employees, you need a license to ensure compliance with our Terms of Service. Usage of the API in violation of these terms may result in your access being revoked.
+**Commercial WebContainer API License**
+
+GrowerAI source code is distributed under MIT license terms, but it uses WebContainers API that [requires licensing](https://webcontainers.io/enterprise) for production usage in commercial, for-profit settings. If you're using the API to meet the needs of your customers, prospective customers, and/or employees, you need a license to ensure compliance with the Terms of Service.
+
+---
+
+**GrowerAI - The #1 AI Marketing Software**
+*Revolutionizing development with AI-powered marketing insights*
+
+For more information, visit [www.thegrower.ai](https://www.thegrower.ai)

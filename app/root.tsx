@@ -42,13 +42,19 @@ export const links: LinksFunction = () => [
 ];
 
 const inlineThemeCode = stripIndents`
-  setTutorialKitTheme();
+  setGrowerAITheme();
 
-  function setTutorialKitTheme() {
-    let theme = localStorage.getItem('bolt_theme');
+  function setGrowerAITheme() {
+    // Clear old bolt theme storage
+    if (localStorage.getItem('bolt_theme')) {
+      localStorage.removeItem('bolt_theme');
+    }
+    
+    let theme = localStorage.getItem('grower_ai_theme');
 
     if (!theme) {
-      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      theme = 'dark'; // Default to dark theme for GrowerAI
+      localStorage.setItem('grower_ai_theme', theme);
     }
 
     document.querySelector('html')?.setAttribute('data-theme', theme);

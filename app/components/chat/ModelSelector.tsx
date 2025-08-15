@@ -15,6 +15,21 @@ interface ModelSelectorProps {
   modelLoading?: string;
 }
 
+// Helper function to determine if a model is likely free
+const isModelLikelyFree = (model: ModelInfo, providerName?: string): boolean => {
+  // OpenRouter models with zero pricing in the label
+  if (providerName === 'OpenRouter' && model.label.includes('in:$0.00') && model.label.includes('out:$0.00')) {
+    return true;
+  }
+
+  // Models with "free" in the name or label
+  if (model.name.toLowerCase().includes('free') || model.label.toLowerCase().includes('free')) {
+    return true;
+  }
+
+  return false;
+};
+
 export const ModelSelector = ({
   model,
   setModel,
@@ -36,6 +51,7 @@ export const ModelSelector = ({
   const providerSearchInputRef = useRef<HTMLInputElement>(null);
   const providerOptionsRef = useRef<(HTMLDivElement | null)[]>([]);
   const providerDropdownRef = useRef<HTMLDivElement>(null);
+  const [showFreeModelsOnly, setShowFreeModelsOnly] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -57,19 +73,31 @@ export const ModelSelector = ({
 
   const filteredModels = [...modelList]
     .filter((e) => e.provider === provider?.name && e.name)
-    .filter(
-      (model) =>
+    .filter((model) => {
+      // Apply free models filter
+      if (showFreeModelsOnly && !isModelLikelyFree(model, provider?.name)) {
+        return false;
+      }
+
+      // Apply search filter
+      return (
         model.label.toLowerCase().includes(modelSearchQuery.toLowerCase()) ||
-        model.name.toLowerCase().includes(modelSearchQuery.toLowerCase()),
-    );
+        model.name.toLowerCase().includes(modelSearchQuery.toLowerCase())
+      );
+    });
 
   const filteredProviders = providerList.filter((p) =>
     p.name.toLowerCase().includes(providerSearchQuery.toLowerCase()),
   );
 
+  // Reset free models filter when provider changes
+  useEffect(() => {
+    setShowFreeModelsOnly(false);
+  }, [provider?.name]);
+
   useEffect(() => {
     setFocusedModelIndex(-1);
-  }, [modelSearchQuery, isModelDropdownOpen]);
+  }, [modelSearchQuery, isModelDropdownOpen, showFreeModelsOnly]);
 
   useEffect(() => {
     setFocusedProviderIndex(-1);
@@ -206,7 +234,7 @@ export const ModelSelector = ({
 
   if (providerList.length === 0) {
     return (
-      <div className="mb-2 p-4 rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-prompt-background text-bolt-elements-textPrimary">
+      <div className="mb-2 p-4 rounded-lg border border-grower-ai-elements-borderColor bg-grower-ai-elements-prompt-background text-grower-ai-elements-textPrimary">
         <p className="text-center">
           No providers are currently enabled. Please enable at least one provider in the settings to start using the
           chat.
@@ -221,11 +249,11 @@ export const ModelSelector = ({
       <div className="relative flex w-full" onKeyDown={handleProviderKeyDown} ref={providerDropdownRef}>
         <div
           className={classNames(
-            'w-full p-2 rounded-lg border border-bolt-elements-borderColor',
-            'bg-bolt-elements-prompt-background text-bolt-elements-textPrimary',
-            'focus-within:outline-none focus-within:ring-2 focus-within:ring-bolt-elements-focus',
+            'w-full p-2 rounded-lg border border-grower-ai-elements-borderColor',
+            'bg-grower-ai-elements-prompt-background text-grower-ai-elements-textPrimary',
+            'focus-within:outline-none focus-within:ring-2 focus-within:ring-grower-ai-elements-focus',
             'transition-all cursor-pointer',
-            isProviderDropdownOpen ? 'ring-2 ring-bolt-elements-focus' : undefined,
+            isProviderDropdownOpen ? 'ring-2 ring-grower-ai-elements-focus' : undefined,
           )}
           onClick={() => setIsProviderDropdownOpen(!isProviderDropdownOpen)}
           onKeyDown={(e) => {
@@ -244,7 +272,7 @@ export const ModelSelector = ({
             <div className="truncate">{provider?.name || 'Select provider'}</div>
             <div
               className={classNames(
-                'i-ph:caret-down w-4 h-4 text-bolt-elements-textSecondary opacity-75',
+                'i-ph:caret-down w-4 h-4 text-grower-ai-elements-textSecondary opacity-75',
                 isProviderDropdownOpen ? 'rotate-180' : undefined,
               )}
             />
@@ -253,7 +281,7 @@ export const ModelSelector = ({
 
         {isProviderDropdownOpen && (
           <div
-            className="absolute z-20 w-full mt-1 py-1 rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 shadow-lg"
+            className="absolute z-20 w-full mt-1 py-1 rounded-lg border border-grower-ai-elements-borderColor bg-grower-ai-elements-background-depth-2 shadow-lg"
             role="listbox"
             id="provider-listbox"
           >
@@ -267,9 +295,9 @@ export const ModelSelector = ({
                   placeholder="Search providers..."
                   className={classNames(
                     'w-full pl-2 py-1.5 rounded-md text-sm',
-                    'bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor',
-                    'text-bolt-elements-textPrimary placeholder:text-bolt-elements-textTertiary',
-                    'focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus',
+                    'bg-grower-ai-elements-background-depth-2 border border-grower-ai-elements-borderColor',
+                    'text-grower-ai-elements-textPrimary placeholder:text-grower-ai-elements-textTertiary',
+                    'focus:outline-none focus:ring-2 focus:ring-grower-ai-elements-focus',
                     'transition-all',
                   )}
                   onClick={(e) => e.stopPropagation()}
@@ -277,7 +305,7 @@ export const ModelSelector = ({
                   aria-label="Search providers"
                 />
                 <div className="absolute left-2.5 top-1/2 -translate-y-1/2">
-                  <span className="i-ph:magnifying-glass text-bolt-elements-textTertiary" />
+                  <span className="i-ph:magnifying-glass text-grower-ai-elements-textTertiary" />
                 </div>
               </div>
             </div>
@@ -287,19 +315,19 @@ export const ModelSelector = ({
                 'max-h-60 overflow-y-auto',
                 'sm:scrollbar-none',
                 '[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2',
-                '[&::-webkit-scrollbar-thumb]:bg-bolt-elements-borderColor',
-                '[&::-webkit-scrollbar-thumb]:hover:bg-bolt-elements-borderColorHover',
+                '[&::-webkit-scrollbar-thumb]:bg-grower-ai-elements-borderColor',
+                '[&::-webkit-scrollbar-thumb]:hover:bg-grower-ai-elements-borderColorHover',
                 '[&::-webkit-scrollbar-thumb]:rounded-full',
-                '[&::-webkit-scrollbar-track]:bg-bolt-elements-background-depth-2',
+                '[&::-webkit-scrollbar-track]:bg-grower-ai-elements-background-depth-2',
                 '[&::-webkit-scrollbar-track]:rounded-full',
                 'sm:[&::-webkit-scrollbar]:w-1.5 sm:[&::-webkit-scrollbar]:h-1.5',
-                'sm:hover:[&::-webkit-scrollbar-thumb]:bg-bolt-elements-borderColor/50',
-                'sm:hover:[&::-webkit-scrollbar-thumb:hover]:bg-bolt-elements-borderColor',
+                'sm:hover:[&::-webkit-scrollbar-thumb]:bg-grower-ai-elements-borderColor/50',
+                'sm:hover:[&::-webkit-scrollbar-thumb:hover]:bg-grower-ai-elements-borderColor',
                 'sm:[&::-webkit-scrollbar-track]:bg-transparent',
               )}
             >
               {filteredProviders.length === 0 ? (
-                <div className="px-3 py-2 text-sm text-bolt-elements-textTertiary">No providers found</div>
+                <div className="px-3 py-2 text-sm text-grower-ai-elements-textTertiary">No providers found</div>
               ) : (
                 filteredProviders.map((providerOption, index) => (
                   <div
@@ -309,13 +337,13 @@ export const ModelSelector = ({
                     aria-selected={provider?.name === providerOption.name}
                     className={classNames(
                       'px-3 py-2 text-sm cursor-pointer',
-                      'hover:bg-bolt-elements-background-depth-3',
-                      'text-bolt-elements-textPrimary',
+                      'hover:bg-grower-ai-elements-background-depth-3',
+                      'text-grower-ai-elements-textPrimary',
                       'outline-none',
                       provider?.name === providerOption.name || focusedProviderIndex === index
-                        ? 'bg-bolt-elements-background-depth-2'
+                        ? 'bg-grower-ai-elements-background-depth-2'
                         : undefined,
-                      focusedProviderIndex === index ? 'ring-1 ring-inset ring-bolt-elements-focus' : undefined,
+                      focusedProviderIndex === index ? 'ring-1 ring-inset ring-grower-ai-elements-focus' : undefined,
                     )}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -348,11 +376,11 @@ export const ModelSelector = ({
       <div className="relative flex w-full min-w-[70%]" onKeyDown={handleModelKeyDown} ref={modelDropdownRef}>
         <div
           className={classNames(
-            'w-full p-2 rounded-lg border border-bolt-elements-borderColor',
-            'bg-bolt-elements-prompt-background text-bolt-elements-textPrimary',
-            'focus-within:outline-none focus-within:ring-2 focus-within:ring-bolt-elements-focus',
+            'w-full p-2 rounded-lg border border-grower-ai-elements-borderColor',
+            'bg-grower-ai-elements-prompt-background text-grower-ai-elements-textPrimary',
+            'focus-within:outline-none focus-within:ring-2 focus-within:ring-grower-ai-elements-focus',
             'transition-all cursor-pointer',
-            isModelDropdownOpen ? 'ring-2 ring-bolt-elements-focus' : undefined,
+            isModelDropdownOpen ? 'ring-2 ring-grower-ai-elements-focus' : undefined,
           )}
           onClick={() => setIsModelDropdownOpen(!isModelDropdownOpen)}
           onKeyDown={(e) => {
@@ -371,7 +399,7 @@ export const ModelSelector = ({
             <div className="truncate">{modelList.find((m) => m.name === model)?.label || 'Select model'}</div>
             <div
               className={classNames(
-                'i-ph:caret-down w-4 h-4 text-bolt-elements-textSecondary opacity-75',
+                'i-ph:caret-down w-4 h-4 text-grower-ai-elements-textSecondary opacity-75',
                 isModelDropdownOpen ? 'rotate-180' : undefined,
               )}
             />
@@ -380,11 +408,40 @@ export const ModelSelector = ({
 
         {isModelDropdownOpen && (
           <div
-            className="absolute z-10 w-full mt-1 py-1 rounded-lg border border-bolt-elements-borderColor bg-bolt-elements-background-depth-2 shadow-lg"
+            className="absolute z-10 w-full mt-1 py-1 rounded-lg border border-grower-ai-elements-borderColor bg-grower-ai-elements-background-depth-2 shadow-lg"
             role="listbox"
             id="model-listbox"
           >
-            <div className="px-2 pb-2">
+            <div className="px-2 pb-2 space-y-2">
+              {/* Free Models Filter Toggle - Only show for OpenRouter */}
+              {provider?.name === 'OpenRouter' && (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setShowFreeModelsOnly(!showFreeModelsOnly);
+                    }}
+                    className={classNames(
+                      'flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium transition-all',
+                      'hover:bg-grower-ai-elements-background-depth-3',
+                      showFreeModelsOnly
+                        ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                        : 'bg-grower-ai-elements-background-depth-3 text-grower-ai-elements-textSecondary border border-grower-ai-elements-borderColor',
+                    )}
+                  >
+                    <span className="i-ph:gift text-xs" />
+                    Free models only
+                  </button>
+                  {showFreeModelsOnly && (
+                    <span className="text-xs text-grower-ai-elements-textTertiary">
+                      {filteredModels.length} free model{filteredModels.length !== 1 ? 's' : ''}
+                    </span>
+                  )}
+                </div>
+              )}
+
+              {/* Search Input */}
               <div className="relative">
                 <input
                   ref={modelSearchInputRef}
@@ -394,9 +451,9 @@ export const ModelSelector = ({
                   placeholder="Search models..."
                   className={classNames(
                     'w-full pl-2 py-1.5 rounded-md text-sm',
-                    'bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor',
-                    'text-bolt-elements-textPrimary placeholder:text-bolt-elements-textTertiary',
-                    'focus:outline-none focus:ring-2 focus:ring-bolt-elements-focus',
+                    'bg-grower-ai-elements-background-depth-2 border border-grower-ai-elements-borderColor',
+                    'text-grower-ai-elements-textPrimary placeholder:text-grower-ai-elements-textTertiary',
+                    'focus:outline-none focus:ring-2 focus:ring-grower-ai-elements-focus',
                     'transition-all',
                   )}
                   onClick={(e) => e.stopPropagation()}
@@ -404,7 +461,7 @@ export const ModelSelector = ({
                   aria-label="Search models"
                 />
                 <div className="absolute left-2.5 top-1/2 -translate-y-1/2">
-                  <span className="i-ph:magnifying-glass text-bolt-elements-textTertiary" />
+                  <span className="i-ph:magnifying-glass text-grower-ai-elements-textTertiary" />
                 </div>
               </div>
             </div>
@@ -414,21 +471,23 @@ export const ModelSelector = ({
                 'max-h-60 overflow-y-auto',
                 'sm:scrollbar-none',
                 '[&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar]:h-2',
-                '[&::-webkit-scrollbar-thumb]:bg-bolt-elements-borderColor',
-                '[&::-webkit-scrollbar-thumb]:hover:bg-bolt-elements-borderColorHover',
+                '[&::-webkit-scrollbar-thumb]:bg-grower-ai-elements-borderColor',
+                '[&::-webkit-scrollbar-thumb]:hover:bg-grower-ai-elements-borderColorHover',
                 '[&::-webkit-scrollbar-thumb]:rounded-full',
-                '[&::-webkit-scrollbar-track]:bg-bolt-elements-background-depth-2',
+                '[&::-webkit-scrollbar-track]:bg-grower-ai-elements-background-depth-2',
                 '[&::-webkit-scrollbar-track]:rounded-full',
                 'sm:[&::-webkit-scrollbar]:w-1.5 sm:[&::-webkit-scrollbar]:h-1.5',
-                'sm:hover:[&::-webkit-scrollbar-thumb]:bg-bolt-elements-borderColor/50',
-                'sm:hover:[&::-webkit-scrollbar-thumb:hover]:bg-bolt-elements-borderColor',
+                'sm:hover:[&::-webkit-scrollbar-thumb]:bg-grower-ai-elements-borderColor/50',
+                'sm:hover:[&::-webkit-scrollbar-thumb:hover]:bg-grower-ai-elements-borderColor',
                 'sm:[&::-webkit-scrollbar-track]:bg-transparent',
               )}
             >
               {modelLoading === 'all' || modelLoading === provider?.name ? (
-                <div className="px-3 py-2 text-sm text-bolt-elements-textTertiary">Loading...</div>
+                <div className="px-3 py-2 text-sm text-grower-ai-elements-textTertiary">Loading...</div>
               ) : filteredModels.length === 0 ? (
-                <div className="px-3 py-2 text-sm text-bolt-elements-textTertiary">No models found</div>
+                <div className="px-3 py-2 text-sm text-grower-ai-elements-textTertiary">
+                  {showFreeModelsOnly ? 'No free models found' : 'No models found'}
+                </div>
               ) : (
                 filteredModels.map((modelOption, index) => (
                   <div
@@ -438,13 +497,13 @@ export const ModelSelector = ({
                     aria-selected={model === modelOption.name}
                     className={classNames(
                       'px-3 py-2 text-sm cursor-pointer',
-                      'hover:bg-bolt-elements-background-depth-3',
-                      'text-bolt-elements-textPrimary',
+                      'hover:bg-grower-ai-elements-background-depth-3',
+                      'text-grower-ai-elements-textPrimary',
                       'outline-none',
                       model === modelOption.name || focusedModelIndex === index
-                        ? 'bg-bolt-elements-background-depth-2'
+                        ? 'bg-grower-ai-elements-background-depth-2'
                         : undefined,
-                      focusedModelIndex === index ? 'ring-1 ring-inset ring-bolt-elements-focus' : undefined,
+                      focusedModelIndex === index ? 'ring-1 ring-inset ring-grower-ai-elements-focus' : undefined,
                     )}
                     onClick={(e) => {
                       e.stopPropagation();
@@ -454,7 +513,12 @@ export const ModelSelector = ({
                     }}
                     tabIndex={focusedModelIndex === index ? 0 : -1}
                   >
-                    {modelOption.label}
+                    <div className="flex items-center justify-between">
+                      <span>{modelOption.label}</span>
+                      {isModelLikelyFree(modelOption, provider?.name) && (
+                        <span className="i-ph:gift text-xs text-purple-400 ml-2" title="Free model" />
+                      )}
+                    </div>
                   </div>
                 ))
               )}

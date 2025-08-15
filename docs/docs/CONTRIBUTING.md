@@ -1,6 +1,6 @@
 # Contribution Guidelines
 
-Welcome! This guide provides all the details you need to contribute effectively to the project. Thank you for helping us make **bolt.diy** a better tool for developers worldwide. 💡
+Welcome! This guide provides all the details you need to contribute effectively to the project. Thank you for helping us make **GrowerAI** a better tool for developers worldwide. 💡
 
 ---
 

@@ -5,7 +5,6 @@ import { memo, useCallback, useEffect, useState, useMemo } from 'react';
 import { toast } from 'react-toastify';
 import { Popover, Transition } from '@headlessui/react';
 import { diffLines, type Change } from 'diff';
-import { ActionRunner } from '~/lib/runtime/action-runner';
 import { getLanguageFromExtension } from '~/utils/getLanguageFromExtension';
 import type { FileHistory } from '~/types/actions';
 import { DiffView } from './DiffView';
@@ -26,15 +25,17 @@ import useViewport from '~/lib/hooks';
 import { PushToGitHubDialog } from '~/components/@settings/tabs/connections/components/PushToGitHubDialog';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { usePreviewStore } from '~/lib/stores/previews';
+import { chatStore } from '~/lib/stores/chat';
+import type { ElementInfo } from './Inspector';
 
 interface WorkspaceProps {
   chatStarted?: boolean;
   isStreaming?: boolean;
-  actionRunner: ActionRunner;
   metadata?: {
     gitUrl?: string;
   };
   updateChatMestaData?: (metadata: any) => void;
+  setSelectedElement?: (element: ElementInfo | null) => void;
 }
 
 const viewTransition = { ease: cubicEasingFn };
@@ -92,7 +93,7 @@ const FileModifiedDropdown = memo(
         <Popover className="relative">
           {({ open }: { open: boolean }) => (
             <>
-              <Popover.Button className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg bg-bolt-elements-background-depth-2 hover:bg-bolt-elements-background-depth-3 transition-colors text-bolt-elements-item-contentDefault">
+              <Popover.Button className="flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg bg-grower-ai-elements-background-depth-2 hover:bg-grower-ai-elements-background-depth-3 transition-colors text-grower-ai-elements-item-contentDefault">
                 <span>File Changes</span>
                 {hasChanges && (
                   <span className="w-5 h-5 rounded-full bg-accent-500/20 text-accent-500 text-xs flex items-center justify-center border border-accent-500/30">
@@ -109,7 +110,7 @@ const FileModifiedDropdown = memo(
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
               >
-                <Popover.Panel className="absolute right-0 z-20 mt-2 w-80 origin-top-right rounded-xl bg-bolt-elements-background-depth-2 shadow-xl border border-bolt-elements-borderColor">
+                <Popover.Panel className="absolute right-0 z-20 mt-2 w-80 origin-top-right rounded-xl bg-grower-ai-elements-background-depth-2 shadow-xl border border-grower-ai-elements-borderColor">
                   <div className="p-2">
                     <div className="relative mx-2 mb-2">
                       <input
@@ -117,9 +118,9 @@ const FileModifiedDropdown = memo(
                         placeholder="Search files..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-8 pr-3 py-1.5 text-sm rounded-lg bg-bolt-elements-background-depth-1 border border-bolt-elements-borderColor focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                        className="w-full pl-8 pr-3 py-1.5 text-sm rounded-lg bg-grower-ai-elements-background-depth-1 border border-grower-ai-elements-borderColor focus:outline-none focus:ring-2 focus:ring-blue-500/50"
                       />
-                      <div className="absolute left-2 top-1/2 -translate-y-1/2 text-bolt-elements-textTertiary">
+                      <div className="absolute left-2 top-1/2 -translate-y-1/2 text-grower-ai-elements-textTertiary">
                         <div className="i-ph:magnifying-glass" />
                       </div>
                     </div>
@@ -134,10 +135,10 @@ const FileModifiedDropdown = memo(
                             <button
                               key={filePath}
                               onClick={() => onSelectFile(filePath)}
-                              className="w-full px-3 py-2 text-left rounded-md hover:bg-bolt-elements-background-depth-1 transition-colors group bg-transparent"
+                              className="w-full px-3 py-2 text-left rounded-md hover:bg-grower-ai-elements-background-depth-1 transition-colors group bg-transparent"
                             >
                               <div className="flex items-center gap-2">
-                                <div className="shrink-0 w-5 h-5 text-bolt-elements-textTertiary">
+                                <div className="shrink-0 w-5 h-5 text-grower-ai-elements-textTertiary">
                                   {['typescript', 'javascript', 'jsx', 'tsx'].includes(language) && (
                                     <div className="i-ph:file-js" />
                                   )}
@@ -172,10 +173,10 @@ const FileModifiedDropdown = memo(
                                 <div className="flex-1 min-w-0">
                                   <div className="flex items-center justify-between gap-2">
                                     <div className="flex flex-col min-w-0">
-                                      <span className="truncate text-sm font-medium text-bolt-elements-textPrimary">
+                                      <span className="truncate text-sm font-medium text-grower-ai-elements-textPrimary">
                                         {filePath.split('/').pop()}
                                       </span>
-                                      <span className="truncate text-xs text-bolt-elements-textTertiary">
+                                      <span className="truncate text-xs text-grower-ai-elements-textTertiary">
                                         {filePath}
                                       </span>
                                     </div>
@@ -238,13 +239,13 @@ const FileModifiedDropdown = memo(
                         })
                       ) : (
                         <div className="flex flex-col items-center justify-center p-4 text-center">
-                          <div className="w-12 h-12 mb-2 text-bolt-elements-textTertiary">
+                          <div className="w-12 h-12 mb-2 text-grower-ai-elements-textTertiary">
                             <div className="i-ph:file-dashed" />
                           </div>
-                          <p className="text-sm font-medium text-bolt-elements-textPrimary">
+                          <p className="text-sm font-medium text-grower-ai-elements-textPrimary">
                             {searchQuery ? 'No matching files' : 'No modified files'}
                           </p>
-                          <p className="text-xs text-bolt-elements-textTertiary mt-1">
+                          <p className="text-xs text-grower-ai-elements-textTertiary mt-1">
                             {searchQuery ? 'Try another search' : 'Changes will appear here as you edit'}
                           </p>
                         </div>
@@ -253,7 +254,7 @@ const FileModifiedDropdown = memo(
                   </div>
 
                   {hasChanges && (
-                    <div className="border-t border-bolt-elements-borderColor p-2">
+                    <div className="border-t border-grower-ai-elements-borderColor p-2">
                       <button
                         onClick={() => {
                           navigator.clipboard.writeText(filteredFiles.map(([filePath]) => filePath).join('\n'));
@@ -261,7 +262,7 @@ const FileModifiedDropdown = memo(
                             icon: <div className="i-ph:check-circle text-accent-500" />,
                           });
                         }}
-                        className="w-full flex items-center justify-center gap-2 px-3 py-1.5 text-sm rounded-lg bg-bolt-elements-background-depth-1 hover:bg-bolt-elements-background-depth-3 transition-colors text-bolt-elements-textTertiary hover:text-bolt-elements-textPrimary"
+                        className="w-full flex items-center justify-center gap-2 px-3 py-1.5 text-sm rounded-lg bg-grower-ai-elements-background-depth-1 hover:bg-grower-ai-elements-background-depth-3 transition-colors text-grower-ai-elements-textTertiary hover:text-grower-ai-elements-textPrimary"
                       >
                         Copy File List
                       </button>
@@ -278,7 +279,7 @@ const FileModifiedDropdown = memo(
 );
 
 export const Workbench = memo(
-  ({ chatStarted, isStreaming, actionRunner, metadata, updateChatMestaData }: WorkspaceProps) => {
+  ({ chatStarted, isStreaming, metadata, updateChatMestaData, setSelectedElement }: WorkspaceProps) => {
     renderLogger.trace('Workbench');
 
     const [isSyncing, setIsSyncing] = useState(false);
@@ -294,6 +295,8 @@ export const Workbench = memo(
     const unsavedFiles = useStore(workbenchStore.unsavedFiles);
     const files = useStore(workbenchStore.files);
     const selectedView = useStore(workbenchStore.currentView);
+    const { showChat } = useStore(chatStore);
+    const canHideChat = showWorkbench || !showChat;
 
     const isSmallViewport = useViewport(1024);
 
@@ -370,7 +373,7 @@ export const Workbench = memo(
         >
           <div
             className={classNames(
-              'fixed top-[calc(var(--header-height)+1.5rem)] bottom-6 w-[var(--workbench-inner-width)] mr-4 z-0 transition-[left,width] duration-200 bolt-ease-cubic-bezier',
+              'fixed top-[calc(var(--header-height)+1.2rem)] bottom-6 w-[var(--workbench-inner-width)] z-0 transition-[left,width] duration-200 bolt-ease-cubic-bezier',
               {
                 'w-full': isSmallViewport,
                 'left-0': showWorkbench && isSmallViewport,
@@ -379,9 +382,18 @@ export const Workbench = memo(
               },
             )}
           >
-            <div className="absolute inset-0 px-2 lg:px-6">
-              <div className="h-full flex flex-col bg-bolt-elements-background-depth-2 border border-bolt-elements-borderColor shadow-sm rounded-lg overflow-hidden">
-                <div className="flex items-center px-3 py-2 border-b border-bolt-elements-borderColor gap-1">
+            <div className="absolute inset-0 px-2 lg:px-4">
+              <div className="h-full flex flex-col bg-grower-ai-elements-background-depth-2 border border-grower-ai-elements-borderColor shadow-sm rounded-lg overflow-hidden">
+                <div className="flex items-center px-3 py-2 border-b border-grower-ai-elements-borderColor gap-1.5">
+                  <button
+                    className={`${showChat ? 'i-ph:sidebar-simple-fill' : 'i-ph:sidebar-simple'} text-lg text-grower-ai-elements-textSecondary mr-1`}
+                    disabled={!canHideChat || isSmallViewport}
+                    onClick={() => {
+                      if (canHideChat) {
+                        chatStore.setKey('showChat', !showChat);
+                      }
+                    }}
+                  />
                   <Slider selected={selectedView} options={sliderOptions} setSelected={setSelectedView} />
                   <div className="ml-auto" />
                   {selectedView === 'code' && (
@@ -396,9 +408,9 @@ export const Workbench = memo(
                         Toggle Terminal
                       </PanelHeaderButton>
                       <DropdownMenu.Root>
-                        <DropdownMenu.Trigger className="text-sm flex items-center gap-1 text-bolt-elements-item-contentDefault bg-transparent enabled:hover:text-bolt-elements-item-contentActive rounded-md p-1 enabled:hover:bg-bolt-elements-item-backgroundActive disabled:cursor-not-allowed">
+                        <DropdownMenu.Trigger className="text-sm flex items-center gap-1 text-grower-ai-elements-item-contentDefault bg-transparent enabled:hover:text-grower-ai-elements-item-contentActive rounded-md p-1 enabled:hover:bg-grower-ai-elements-item-backgroundActive disabled:cursor-not-allowed">
                           <div className="i-ph:box-arrow-up" />
-                          Sync & Export
+                          Sync
                         </DropdownMenu.Trigger>
                         <DropdownMenu.Content
                           className={classNames(
@@ -414,20 +426,7 @@ export const Workbench = memo(
                         >
                           <DropdownMenu.Item
                             className={classNames(
-                              'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
-                            )}
-                            onClick={() => {
-                              workbenchStore.downloadZip();
-                            }}
-                          >
-                            <div className="flex items-center gap-2">
-                              <div className="i-ph:download-simple"></div>
-                              <span>Download Code</span>
-                            </div>
-                          </DropdownMenu.Item>
-                          <DropdownMenu.Item
-                            className={classNames(
-                              'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
+                              'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-grower-ai-elements-textPrimary hover:bg-grower-ai-elements-item-backgroundActive gap-2 rounded-md group relative',
                             )}
                             onClick={handleSyncFiles}
                             disabled={isSyncing}
@@ -439,7 +438,7 @@ export const Workbench = memo(
                           </DropdownMenu.Item>
                           <DropdownMenu.Item
                             className={classNames(
-                              'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-bolt-elements-textPrimary hover:bg-bolt-elements-item-backgroundActive gap-2 rounded-md group relative',
+                              'cursor-pointer flex items-center w-full px-4 py-2 text-sm text-grower-ai-elements-textPrimary hover:bg-grower-ai-elements-item-backgroundActive gap-2 rounded-md group relative',
                             )}
                             onClick={() => setIsPushDialogOpen(true)}
                           >
@@ -485,10 +484,10 @@ export const Workbench = memo(
                     initial={{ x: '100%' }}
                     animate={{ x: selectedView === 'diff' ? '0%' : selectedView === 'code' ? '100%' : '-100%' }}
                   >
-                    <DiffView fileHistory={fileHistory} setFileHistory={setFileHistory} actionRunner={actionRunner} />
+                    <DiffView fileHistory={fileHistory} setFileHistory={setFileHistory} />
                   </View>
                   <View initial={{ x: '100%' }} animate={{ x: selectedView === 'preview' ? '0%' : '100%' }}>
-                    <Preview />
+                    <Preview setSelectedElement={setSelectedElement} />
                   </View>
                 </div>
               </div>
